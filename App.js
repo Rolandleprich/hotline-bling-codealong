@@ -1,13 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
 
-export default function App() {
+import React, { Fragment } from 'react';
+
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet } from 'react-native';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import Home from './screens/Home';
+import New from './screens/New';
+
+const Stack = createStackNavigator();
+
+const forFade = ({ current }) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+});
+
+export default function App(props) {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Fragment>
+      <StatusBar
+        backgroundColor={'#000000'}
+        translucent={true}
+        style="light"
+      />
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            headerShown: false,
+            cardStyleInterpolator: forFade,
+          }}
+        >
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="New" component={New} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Fragment>
   );
 }
 
